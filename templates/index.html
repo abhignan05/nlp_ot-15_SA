@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Sentiment Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #001F3F, #00509E);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .btn {
+            background: #008CBA;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 140, 186, 0.8);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn:hover {
+            background: #005F8A;
+            box-shadow: 0 0 20px rgba(0, 140, 186, 1);
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .background-anim {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0); opacity: 0.5; }
+            to { transform: translateY(-120vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-anim"></div>
+    <div class="container">
+        <h1>Financial Sentiment Analysis</h1>
+        <button class="btn" onclick="predictSentiment()">Predict Sentiment</button>
+    </div>
+    
+    <script>
+        function predictSentiment() {
+            alert('Predicting sentiment...');
+        }
+
+        function createCircles() {
+            const container = document.querySelector('.background-anim');
+            for (let i = 0; i < 20; i++) {
+                let circle = document.createElement('div');
+                circle.classList.add('circle');
+                let size = Math.random() * 30 + 10;
+                let positionX = Math.random() * window.innerWidth;
+                let duration = Math.random() * 5 + 5;
+                
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${positionX}px`;
+                circle.style.animationDuration = `${duration}s`;
+                circle.style.animationDelay = `${Math.random() * 2}s`;
+                
+                container.appendChild(circle);
+            }
+        }
+        
+        createCircles();
+    </script>
+</body>
+</html>
