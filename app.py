@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from test import TextToNum
 import pickle
 
@@ -12,23 +12,42 @@ def home():
 def predict():
     if request.method == "POST":
         msg = request.form.get("message")
-        print(msg)
-        
+        print(f"User Input: {msg}")
+
+        # Preprocess the input message
         cl = TextToNum(msg)
         cl.cleaner()
         cl.token()
         cl.removeStop()
-        st = cl.stemme()
-        stvc =  " ".join(st)
-        with open("vectorizer.pickle","rb") as vc_file:
+        stemmed_words = cl.stemme()
+        processed_text = " ".join(stemmed_words)
+
+        # Load vectorizer
+        with open("vectorizer.pickle", "rb") as vc_file:
             vectorizer = pickle.load(vc_file)
-        dt = vectorizer.transform([stvc]).toarray()
-        with open("model.pickle","rb") as mb_file:
+        
+        dt = vectorizer.transform([processed_text]).toarray()
+
+        # Load model
+        with open("model.pickle", "rb") as mb_file:
             model = pickle.load(mb_file)
-        pred = model.predict(dt)
-        print(pred)
-        return jsonify({"prediction":str(pred[0])})
-    else:
-        return render_template("predict.html")
+
+        # Make prediction
+        pred = model.predict(dt)[0]  # Extract the single prediction
+
+        # Convert numeric prediction to text labels
+        if pred == -1:
+            pred = "Negative"
+        elif pred == 0:
+            pred = "Neutral"
+        else:
+            pred = "Positive"
+
+        print(f"Prediction: {pred}")
+
+        return render_template("result.html", prediction=pred)
+    
+    return render_template("predict.html")
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0',port=5080)

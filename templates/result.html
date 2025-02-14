@@ -1,88 +1,61 @@
-<!-- Updated result.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Playfair Display', serif;
         }
 
         body {
-            background: linear-gradient(to right, #141E30, #243B55);
+            background: #0d0d0d;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            text-align: center;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-            color: #00d4ff;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 18px;
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #00d4ff;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            max-width: 600px;
-            width: 100%;
-            animation: fadeIn 1.5s ease-in-out;
+            overflow: hidden;
+            position: relative;
         }
 
         h1 {
-            color: #00d4ff;
+            font-size: 3.5rem;
             margin-bottom: 20px;
+            text-shadow: 0 0 20px #ffffff;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: slideIn 1.5s ease-out;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            text-align: center;
         }
 
         .result {
-            font-size: 32px;
+            font-size: 2rem;
             font-weight: bold;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            display: inline-block;
-            width: 100%;
             transition: 0.3s ease-in-out;
+            width: 100%;
+            text-align: center;
             animation: fadeIn 1.5s ease-in-out;
         }
 
@@ -101,44 +74,94 @@
             box-shadow: 0px 0px 15px rgba(3, 169, 244, 0.8);
         }
 
-        .back-btn {
-            padding: 12px 25px;
-            background: #ff9800;
-            color: #fff;
-            font-size: 18px;
+        .btn {
+            background: linear-gradient(to right, #444444, #666666);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            animation: bounce 2s infinite;
             text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s ease-in-out;
-            font-weight: bold;
+            text-align: center;
         }
 
-        .back-btn:hover {
-            background: #f57c00;
-            transform: scale(1.08);
+        .btn:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(to right, #666666, #888888);
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rectangle {
+            position: absolute;
+            width: 80%;
+            height: 70%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            animation: fadeIn 3s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
     </style>
 </head>
-<body>
-    <nav>
-        <div class="logo">Sentiment Predictor</div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/predict">Predictions</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-    </nav>
 
-    <div class="container">
-        <h1>Prediction Result</h1>
+<body>
+    <div class="background-animation">
+        <div class="rectangle"></div>
+    </div>
+
+    <h1>Sentiment Prediction Result</h1>
+    <div class="result-container">
         <p class="result {% if prediction == 'positive' %}positive{% elif prediction == 'negative' %}negative{% else %}neutral{% endif %}">
             {{ prediction | capitalize }}
         </p>
-        <a href="/predict" class="back-btn">Go Back</a>
+        <a href="/predict" class="btn">Go Back</a>
     </div>
 </body>
+
 </html>
